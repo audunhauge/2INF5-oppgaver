@@ -1,24 +1,7 @@
-    var brett = { width:450, height:300 };
-    var b;   // ballen
-    var bat; // den som slår ballen
-    var mou = {x:0, y:0};  // mouse position
+ var brett = { width:450, height:300 };
+    var b;
     // ikke bra å definere variable utenfor functions
-
-    document.onmousemove = function(e) {
-      /*
-        får tak i mouse position og lagrer i m
-        dersom bat finnes da plasseres den
-        etter m.x 
-      */
-      mou.x = e.pageX;
-      mou.y = e.pageY;
-      if (bat.xpos != undefined) {
-        bat.xpos = Math.max(0,Math.min(400,mou.x-34));
-        bat.style.left = bat.xpos + "px";
-      }
-    }
-
-
+  
     function startSpill() {
       /*
         Plasserer ballen i start-posisjon 
@@ -28,21 +11,13 @@
       b.className = "ball";
       b.id = "ball";
       brett.appendChild(b); 
+      //b = document.getElementById("ball");
       b.xfart = 3;
       b.yfart = 5;
       b.xpos = 120;
       b.ypos = 100;
       b.style.top = b.ypos + "px";
       b.style.left = b.xpos +"px";
-      bat = document.createElement('div');
-      bat.className = "batty";
-      bat.id = "bat";
-      brett.appendChild(bat); 
-      bat.xpos = 250;
-      bat.ypos = 280;
-      bat.style.top = bat.ypos + "px";
-      bat.style.left = bat.xpos +"px";
-    
       setInterval(animerBall,50);
     }
     
@@ -74,5 +49,4 @@
         b.style.top = b.ypos + "px";
         b.style.left = b.xpos + "px";
       }
-      
     }
