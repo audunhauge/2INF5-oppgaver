@@ -1,0 +1,15 @@
+ #brett {  
+       position:relative;
+       width:450px;
+       height:300px;
+       border:solid rgba(205, 116, 41, 0.56) 9px;
+    }
+    .ball {
+       position:absolute;
+       top:20px;
+       left:20px;
+       width:16px;
+       height:16px;
+       background:red;
+       border-radius:8px;
+    }
