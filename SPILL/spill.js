@@ -1,14 +1,20 @@
+    /*
+     *  Spillet er basert på breakout
+     *
+    */
+
     var brett = { width:450, height:300 };
     var b;   // ballen
     var bat; // den som slår ballen
     var mou = {x:0, y:0};  // mouse position
+    var soundeffect;
     // ikke bra å definere variable utenfor functions
 
     document.onmousemove = function(e) {
       /*
         får tak i mouse position og lagrer i m
         dersom bat finnes da plasseres den
-        etter m.x 
+        etter m.x
       */
       mou.x = e.pageX;
       mou.y = e.pageY;
@@ -22,23 +28,33 @@
       }
     }
 
-
     function startSpill() {
+      var bil = document.getElementById("bil");
+      var animasjon = new TimeLineMax();
+      animasjon.add( TweenMax.to(bil, 1, { left:30 }))
+      startGame();
+    }
+
+
+    function startGame() {
       /*
-        Plasserer ballen i start-posisjon 
+        Plasserer ballen i start-posisjon
       */
       var brett = document.getElementById("brett");
+      var intro = document.getElementById("intro");
+      brett.style.left = "30px";
+      intro.style.left = "-530px";
       b = document.createElement('div');
       b.className = "ball";
       b.id = "ball";
-      brett.appendChild(b); 
+      brett.appendChild(b);
       b.xfart = 3;
       b.yfart = 5;
       b.xpos = 120;
       b.ypos = 100;
       b.width = 16;
       b.height = 16;
-      b.belowbat = false;  
+      b.belowbat = false;
         // true dersom bunn av ball
         // kommer under top av bat
       b.style.top = b.ypos + "px";
@@ -47,7 +63,7 @@
       bat = document.createElement('div');
       bat.className = "batty";
       bat.id = "bat";
-      brett.appendChild(bat); 
+      brett.appendChild(bat);
       bat.xpos = 250;
       bat.ypos = 280;
       bat.width = 50;
@@ -55,11 +71,15 @@
       bat.xfart = 0;   // beregnes ut fra siste endring
       bat.style.top = bat.ypos + "px";
       bat.style.left = bat.xpos +"px";
-    
+
       setInterval(animerBall,50);
+      soundeffect = new Howl({
+          urls: ['sounds.mp3'],
+          sprite: { bounce: [0, 500], miss: [500, 1000]
+          }
+      });
     }
-    
-    
+
     function animerBall() {
       /*
        For hver frame skal ballen flyttes
@@ -72,6 +92,7 @@
          if (collision(b,bat)) {
             // ballen traff bat - vi snur y-farten
             b.yfart = - Math.abs(b.yfart);
+            soundeffect.play("bounce");
             if (b.belowbat) {
               // vi traff fra en av sidene
               b.xfart = -b.xfart;
@@ -85,6 +106,7 @@
             goodPos = false;
          } else if (b.ypos + b.yfart + b.height > brett.height) {
             // ballen vil komme nedenfor bunn av brett
+            soundeffect.play("miss");
             b.style.background = wildColor();
             b.xpos = 100 + Math.random()*30;
             b.ypos = 40;
@@ -102,23 +124,26 @@
 
       if (b.ypos + b.yfart < 0) {
           b.yfart = Math.abs(b.yfart);
+          soundeffect.play("bounce");
           goodPos = false;
       }
       if (b.xpos + b.xfart > brett.width - 16 ) {
           b.xfart = -Math.abs(b.xfart);
+          soundeffect.play("bounce");
           goodPos = false;
       }
       if (b.xpos + b.xfart < 0) {
           b.xfart = Math.abs(b.xfart);
+          soundeffect.play("bounce");
           goodPos = false;
       }
-      if (goodPos) {    
+      if (goodPos) {
         b.xpos = b.xpos + b.xfart;
-        b.ypos = b.ypos + b.yfart;  
+        b.ypos = b.ypos + b.yfart;
         b.style.top = b.ypos + "px";
         b.style.left = b.xpos + "px";
       }
-       
+
     }
 
     function randint(m) {
@@ -136,7 +161,7 @@
         Begge obj må ha egenskapene width,height,xpos,ypos
         returns true if overlap
       */
-      return (    a.xpos >= b.xpos - a.width 
+      return (    a.xpos >= b.xpos - a.width
                && a.xpos <= b.xpos + b.width
                && a.ypos >= b.ypos - a.height
                && a.ypos <= b.ypos + b.height);
