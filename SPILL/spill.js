@@ -77,7 +77,7 @@
               b.xfart = -b.xfart;
               b.belowbat = false;
             }
-            // juster ballfarten med 20% av bat sin fart
+            // juster ballfarten med 50% av bat sin fart
             b.xfart += bat.xfart * 0.5;
             b.ypos = bat.ypos-b.height;
             // plasserer ballen paa bat
@@ -91,6 +91,11 @@
             b.yfart = Math.random()*5+2;
             b.belowbat = false;
          } else {
+            // naar vi kommer hit er bunn av ballen
+            // under top av bat, men over bunn av brett
+            // sjekk om vi kolliderer neste gang.
+            // dersom vi gjør det - da har vi truffet
+            // ballen med siden av bat
             b.belowbat = true;
          }
       }
@@ -121,7 +126,8 @@
     }
 
     function wildColor() {
-      return "rgb("+randint(255)+","+randint(255)+","+randint(255)+")";
+      var tall = [1,1,1].map(function(e) { return randint(255);}).join(",");
+      return "rgb("+tall+")";
     }
 
     function collision(a,b) {
