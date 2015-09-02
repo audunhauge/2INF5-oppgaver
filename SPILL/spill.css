@@ -1,5 +1,16 @@
+#intro {
+  position:absolute;
+  left: 30px;
+  top:130px;
+  width:450px;
+  height:300px;
+  background:black;
+  border:solid rgba(205, 116, 41, 0.56) 9px;
+}
 #brett {  
-  position:relative;
+  position:absolute;
+  left: -630px;
+  top:130px;
   width:450px;
   height:300px;
   border:solid rgba(205, 116, 41, 0.56) 9px;
