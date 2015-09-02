@@ -1,24 +1,28 @@
     /*
-     *  Spillet er basert p� breakout
+     *  Spillet er basert på breakout
      *
     */
 
     var brett = { width:450, height:300 };
-    var b;   // ballen
-    var bat; // den som sl�r ballen
+       // dimensjonene på brettet
+    var b;                 // ballen
+    var bat;               // den som slår ballen
     var mou = {x:0, y:0};  // mouse position
-    var soundeffect;
-    // ikke bra � definere variable utenfor functions
-
+    var soundeffect;       // lyder brukt i spillet
+    var timer;             // slik at vi kan slå den av/på
+    var playing = false;   // settes true når spillet er i gang
+    
+    /**
+      * Fanger opp musbevegelser
+      * får tak i mouse position og lagrer i m
+      * dersom bat finnes da plasseres den
+      * etter m.x
+      * @param  {Object} e mouseevent
+     */
     document.onmousemove = function(e) {
-      /*
-        f�r tak i mouse position og lagrer i m
-        dersom bat finnes da plasseres den
-        etter m.x
-      */
       mou.x = e.pageX;
       mou.y = e.pageY;
-      if (bat.xpos != undefined) {
+      if (bat != undefined) {
         var oldpos = bat.xpos;
         bat.xpos = Math.max(0,Math.min(400,mou.x-34));
         bat.xfart = (bat.xfart + bat.xpos - oldpos)/2;
@@ -28,18 +32,48 @@
       }
     }
 
+    /**
+     *   lag intro animasjonen
+     *   når den er ferdig da startes spillet
+     */
     function startSpill() {
-      var bil = document.getElementById("bil");
-      var animasjon = new TimeLineMax();
-      animasjon.add( TweenMax.to(bil, 1, { left:30 }))
-      startGame();
+      var animasjon = new TimelineMax();
+
+      soundeffect = new Howl({
+          urls: ['sounds.mp3'],
+          sprite: { bounce: [0, 500], miss: [500, 400], car:[1000,8000]
+          }
+      });
+
+      animasjon.from("#bil", 9, 
+        { left:400,
+          width:30,
+          height:30,
+          rotation:5
+        }   // start spillet når intro ferdig
+      ).to("#box1",2,{rotation:45,x:180,y:150},"-=3")
+       .to("#box2",3,{rotation:15},"-=4")
+       .to("#box3",3,{rotation:10},"-=4")
+       .to("#box2",1.5,{rotation:15,x:80,y:150},"-=2.5")
+       .to("#box3",1,{x:30,y:150},"-=1.5")
+       .from("#logo",5,{opacity:0,onComplete:startGame},"-=3"); 
+
+      animasjon.play();
+
+      soundeffect.play("car");
+      
     }
 
-
+    /**
+     *  dytt introen utforbi skjermen
+     *  <br>legg spillebrettet på riktig plass
+     *  <br>lag en div for ball
+     *  <br>lag en div for bat
+     *  <br>plasser spill-objekter p? brett
+     *  <br>start timeren
+     *  <br>last inn fil med lyd-effekter
+     */
     function startGame() {
-      /*
-        Plasserer ballen i start-posisjon
-      */
       var brett = document.getElementById("brett");
       var intro = document.getElementById("intro");
       brett.style.left = "30px";
@@ -72,19 +106,27 @@
       bat.style.top = bat.ypos + "px";
       bat.style.left = bat.xpos +"px";
 
-      setInterval(animerBall,50);
-      soundeffect = new Howl({
-          urls: ['sounds.mp3'],
-          sprite: { bounce: [0, 500], miss: [500, 1000]
-          }
-      });
+      timer = setInterval(animerBall,50);
+      playing = true;
+
+
+      Mousetrap.bind('p', function() {
+           if (playing && timer) {
+              clearInterval(timer);
+              playing = false;
+           } else {
+              timer = setInterval(animerBall,50);
+              playing = true;
+           }
+        }, 'keyup');
     }
 
-    function animerBall() {
-      /*
-       For hver frame skal ballen flyttes
+    /**
+      * For hver frame skal ballen flyttes
+      * sjekk kollisjon mot kanter
+      * sjekk om ball treffer bat
       */
-
+    function animerBall() {
       var goodPos = true;  // anta at vi er ok
 
       // sjekk om vi treffer bunn eller bat
@@ -111,12 +153,13 @@
             b.xpos = 100 + Math.random()*30;
             b.ypos = 40;
             b.yfart = Math.random()*5+2;
+            b.xfart = Math.random()*4+2;
             b.belowbat = false;
          } else {
             // naar vi kommer hit er bunn av ballen
             // under top av bat, men over bunn av brett
             // sjekk om vi kolliderer neste gang.
-            // dersom vi gj�r det - da har vi truffet
+            // dersom vi gjør det - da har vi truffet
             // ballen med siden av bat
             b.belowbat = true;
          }
@@ -146,21 +189,33 @@
 
     }
 
+    /**
+     * Generer tilfeldig heltall 1..m
+     * @param  {int} m maks verdi
+     * @return {int} 1..m
+     */
     function randint(m) {
+      
       return Math.round(Math.random()*m+1);
     }
 
+    /**
+     * Generer tilfeldig rgb(0..255,0..255,0..255)
+     * @return {String} "rgb(..)"
+     */
     function wildColor() {
       var tall = [1,1,1].map(function(e) { return randint(255);}).join(",");
       return "rgb("+tall+")";
     }
 
-    function collision(a,b) {
-      /*
-        sjekker om to objekter a og b overlapper
-        Begge obj m� ha egenskapene width,height,xpos,ypos
-        returns true if overlap
+    /**
+      * sjekker om to objekter a og b overlapper
+      * Begge obj må ha egenskapene width,height,xpos,ypos
+      * @param {obj} a 
+      * @param {obj} b
+      * @return {Bool} true if overlap
       */
+    function collision(a,b) {
       return (    a.xpos >= b.xpos - a.width
                && a.xpos <= b.xpos + b.width
                && a.ypos >= b.ypos - a.height

@@ -1,3 +1,39 @@
+#bil {
+  position:absolute;
+  left:30px;
+  top:130px;
+}
+
+#logo {
+  position:absolute;
+  width:180px;
+  height: 32px;
+  left: 80px;
+  top:50px;
+  font-size: 1.3em;
+  color: white;
+}
+
+.box {
+  position:absolute;
+  left:90px;
+  width: 35px;
+  height: 35px;
+  border:solid green 3px;
+  border-radius: 5px;
+  background: #3c3;
+}
+#box1 {
+  top:100px;
+}
+#box2 {
+  top:135px;
+}
+#box3 {
+  top:170px;
+}
+
+
 #intro {
   position:absolute;
   left: 30px;
