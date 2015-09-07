@@ -24,7 +24,7 @@
       mou.y = e.pageY;
       if (bat != undefined) {
         var oldpos = bat.xpos;
-        bat.xpos = Math.max(0,Math.min(400,mou.x-34));
+        bat.xpos = Math.max(0,Math.min(400,mou.x-64));
         bat.xfart = (bat.xfart + bat.xpos - oldpos)/2;
         // dette er beregna xfart ut fra endring i posisjon
         // gjennomsnitt av siste endring og denne
@@ -61,7 +61,7 @@
       animasjon.play();
 
       soundeffect.play("car");
-      
+
     }
 
     /**
@@ -194,8 +194,7 @@
      * @param  {int} m maks verdi
      * @return {int} 1..m
      */
-    function randint(m) {
-      
+    function randint(m) {      
       return Math.round(Math.random()*m+1);
     }
 
