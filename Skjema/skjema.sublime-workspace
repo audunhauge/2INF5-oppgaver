@@ -1,0 +1,344 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"lag",
+				"lagEnHilsen"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"rg",
+				"rgba()"
+			],
+			[
+				"ma",
+				"margin-left"
+			],
+			[
+				"spe",
+				"speedValues"
+			],
+			[
+				"som",
+				"someLeft"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"for",
+				"For"
+			],
+			[
+				"br",
+				"brikkene"
+			],
+			[
+				"w",
+				"width"
+			],
+			[
+				"bri",
+				"brikkeFarge"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"lagre",
+				"lagreInfo"
+			],
+			[
+				"star",
+				"startSpill"
+			],
+			[
+				"in",
+				"input	Tag"
+			],
+			[
+				"start",
+				"startGame"
+			],
+			[
+				"fo",
+				"font-size"
+			],
+			[
+				"play",
+				"playing"
+			],
+			[
+				"box",
+				"boxes"
+			],
+			[
+				"bo",
+				"border-radius"
+			],
+			[
+				"y",
+				"ypos"
+			],
+			[
+				"b",
+				"ball"
+			],
+			[
+				"st",
+				"startSpill"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "<html>\n  <head>\n  	 <link rel=\"stylesheet\" href=\"http://yui.yahooapis.com/pure/0.6.0/pure-min.css\">\n  	 <link rel=\"stylesheet\" href=\"skjema.css\">\n  	 <script src=\"skjema.js\"></script>\n  </head>\n  <body>\n     <div id=\"personalia\">\n      <p>\n      <form class=\"pure-form pure-form-aligned\" \n            oninput=\"sspeed.value = speed.valueAsNumber\">\n\n        <div class=\"pure-control-group\">\n          <label for=\"speed\">Hastighet</label>\n          <input id=\"speed\" type=\"range\" placeholder=\"hastighet (1-5)\">\n          <output for=\"speed\" name=\"sspeed\">50</output>\n        </div>\n\n\n        <div class=\"pure-control-group\">\n          <label for=\"navn\">navn</label>\n          <input id=\"navn\" type=\"text\" placeholder=\"skriv navn\">\n        </div>\n        <div class=\"pure-control-group\">\n          <label for=\"alder\">Alder</label>\n          <input id=\"alder\" min=1 max=120\n                 type=\"number\" placeholder=\"alder\">\n        </div>\n        <div class=\"pure-control-group\">\n          <label for=\"date\">Dato</label>\n          <input type=\"date\">\n        </div>\n        <div class=\"pure-control-group\">\n          <label for=\"antall\">Antall rader</label>\n          <input id=\"antall\" type=\"number\" placeholder=\"antall rader\">\n        </div>\n        \n        <div class=\"pure-controls\">\n          <div id=\"lagre\"\n               class=\"pure-button pure-button-primary\">Lagre</div>\n        </div>\n      </form>\n    </div>\n    <div id=\"hilsen\">\n    </div>\n\n    <script>\n       var lagre = document.querySelector(\"#lagre\");\n       lagre.addEventListener(\"click\",lagreInfo)\n    </script>\n  </body>\n</html>",
+			"file": "skjema.html",
+			"file_size": 1620,
+			"file_write_time": 130879907476154989,
+			"settings":
+			{
+				"buffer_size": 1599,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "skjema.js",
+			"settings":
+			{
+				"buffer_size": 837,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "skjema.css",
+			"settings":
+			{
+				"buffer_size": 71,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 223.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/Audun/Documents/GitHub/2INF5-oppgaver/Skjema/skjema.sublime-project",
+		"/C/Users/Audun/Documents/GitHub/2INF5-oppgaver/SPILL/test.js",
+		"/C/Users/Audun/Documents/spill.js",
+		"/C/Users/Audun/Documents/spill.css",
+		"/C/Users/Audun/Documents/spill.html"
+	],
+	"find":
+	{
+		"height": 43.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"lagre",
+			"Interv",
+			"class",
+			"bat",
+			"collis",
+			"wildColor"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"brick"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "skjema.html",
+					"settings":
+					{
+						"buffer_size": 1599,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								325,
+								343
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 117.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "skjema.js",
+					"settings":
+					{
+						"buffer_size": 837,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								765,
+								765
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 333.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "skjema.css",
+					"settings":
+					{
+						"buffer_size": 71,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								51,
+								51
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 84.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 50.0,
+	"status_bar_visible": true
+}

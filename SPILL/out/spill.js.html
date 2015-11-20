@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: spill.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: spill.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>    /*
+     *  Spillet er basert på breakout
+     *
+    */
+
+    var brett = { width:450, height:300 };
+    var b;   // ballen
+    var bat; // den som sl?r ballen
+    var mou = {x:0, y:0};  // mouse position
+    var soundeffect;  // lyder brukt i spillet
+    
+    /**
+      * Fanger opp musbevegelser
+      * får tak i mouse position og lagrer i m
+      * dersom bat finnes da plasseres den
+      * etter m.x
+      * @param  {Object} e mouseevent
+     */
+    document.onmousemove = function(e) {
+      mou.x = e.pageX;
+      mou.y = e.pageY;
+      if (bat != undefined) {
+        var oldpos = bat.xpos;
+        bat.xpos = Math.max(0,Math.min(400,mou.x-34));
+        bat.xfart = (bat.xfart + bat.xpos - oldpos)/2;
+        // dette er beregna xfart ut fra endring i posisjon
+        // gjennomsnitt av siste endring og denne
+        bat.style.left = bat.xpos + "px";
+      }
+    }
+
+    /**
+     *   lag intro animasjonen
+     *   når den er ferdig da startes spillet
+     */
+    function startSpill() {
+      var bil = document.getElementById("bil");
+      var animasjon = new TimelineMax();
+      animasjon.add( TweenMax.from(bil, 8, 
+        { left:400,
+          width:30,
+          height:30,
+          rotate:50,
+          onComplete:startGame }));  // start spillet n?r intro ferdig
+      animasjon.play();
+    }
+
+    /**
+     *  dytt introen utforbi skjermen
+     *  &lt;br>legg spillebrettet på riktig plass
+     *  &lt;br>lag en div for ball
+     *  &lt;br>lag en div for bat
+     *  &lt;br>plasser spill-objekter p? brett
+     *  &lt;br>start timeren
+     *  &lt;br>last inn fil med lyd-effekter
+     */
+    function startGame() {
+      var brett = document.getElementById("brett");
+      var intro = document.getElementById("intro");
+      brett.style.left = "30px";
+      intro.style.left = "-530px";
+      b = document.createElement('div');
+      b.className = "ball";
+      b.id = "ball";
+      brett.appendChild(b);
+      b.xfart = 3;
+      b.yfart = 5;
+      b.xpos = 120;
+      b.ypos = 100;
+      b.width = 16;
+      b.height = 16;
+      b.belowbat = false;
+        // true dersom bunn av ball
+        // kommer under top av bat
+      b.style.top = b.ypos + "px";
+      b.style.left = b.xpos +"px";
+
+      bat = document.createElement('div');
+      bat.className = "batty";
+      bat.id = "bat";
+      brett.appendChild(bat);
+      bat.xpos = 250;
+      bat.ypos = 280;
+      bat.width = 50;
+      bat.height = 16;
+      bat.xfart = 0;   // beregnes ut fra siste endring
+      bat.style.top = bat.ypos + "px";
+      bat.style.left = bat.xpos +"px";
+
+      setInterval(animerBall,50);
+
+      soundeffect = new Howl({
+          urls: ['sounds.mp3'],
+          sprite: { bounce: [0, 500], miss: [500, 1000]
+          }
+      });
+    }
+
+    /**
+      * For hver frame skal ballen flyttes
+      * sjekk kollisjon mot kanter
+      * sjekk om ball treffer bat
+      */
+    function animerBall() {
+      var goodPos = true;  // anta at vi er ok
+
+      // sjekk om vi treffer bunn eller bat
+      if (b.ypos + b.height > bat.ypos) {
+         if (collision(b,bat)) {
+            // ballen traff bat - vi snur y-farten
+            b.yfart = - Math.abs(b.yfart);
+            soundeffect.play("bounce");
+            if (b.belowbat) {
+              // vi traff fra en av sidene
+              b.xfart = -b.xfart;
+              b.belowbat = false;
+            }
+            // juster ballfarten med 50% av bat sin fart
+            b.xfart += bat.xfart * 0.5;
+            b.ypos = bat.ypos-b.height;
+            // plasserer ballen paa bat
+            b.style.top = b.ypos + "px";
+            goodPos = false;
+         } else if (b.ypos + b.yfart + b.height > brett.height) {
+            // ballen vil komme nedenfor bunn av brett
+            soundeffect.play("miss");
+            b.style.background = wildColor();
+            b.xpos = 100 + Math.random()*30;
+            b.ypos = 40;
+            b.yfart = Math.random()*5+2;
+            b.belowbat = false;
+         } else {
+            // naar vi kommer hit er bunn av ballen
+            // under top av bat, men over bunn av brett
+            // sjekk om vi kolliderer neste gang.
+            // dersom vi gj?r det - da har vi truffet
+            // ballen med siden av bat
+            b.belowbat = true;
+         }
+      }
+
+      if (b.ypos + b.yfart &lt; 0) {
+          b.yfart = Math.abs(b.yfart);
+          soundeffect.play("bounce");
+          goodPos = false;
+      }
+      if (b.xpos + b.xfart > brett.width - 16 ) {
+          b.xfart = -Math.abs(b.xfart);
+          soundeffect.play("bounce");
+          goodPos = false;
+      }
+      if (b.xpos + b.xfart &lt; 0) {
+          b.xfart = Math.abs(b.xfart);
+          soundeffect.play("bounce");
+          goodPos = false;
+      }
+      if (goodPos) {
+        b.xpos = b.xpos + b.xfart;
+        b.ypos = b.ypos + b.yfart;
+        b.style.top = b.ypos + "px";
+        b.style.left = b.xpos + "px";
+      }
+
+    }
+
+    /**
+     * Generer tilfeldig heltall 1..m
+     * @param  {int} m maks verdi
+     * @return {int} 1..m
+     */
+    function randint(m) {
+      
+      return Math.round(Math.random()*m+1);
+    }
+
+    /**
+     * Generer tilfeldig rgb(0..255,0..255,0..255)
+     * @return {String} "rgb(..)"
+     */
+    function wildColor() {
+      var tall = [1,1,1].map(function(e) { return randint(255);}).join(",");
+      return "rgb("+tall+")";
+    }
+
+    /**
+      * sjekker om to objekter a og b overlapper
+      * Begge obj m? ha egenskapene width,height,xpos,ypos
+      * @param {obj} a 
+      * @param {obj} b
+      * @return {Bool} true if overlap
+      */
+    function collision(a,b) {
+      return (    a.xpos >= b.xpos - a.width
+               &amp;&amp; a.xpos &lt;= b.xpos + b.width
+               &amp;&amp; a.ypos >= b.ypos - a.height
+               &amp;&amp; a.ypos &lt;= b.ypos + b.height);
+    }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#animerBall">animerBall</a></li><li><a href="global.html#collision">collision</a></li><li><a href="global.html#randint">randint</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#startSpill">startSpill</a></li><li><a href="global.html#wildColor">wildColor</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Wed Sep 02 2015 16:22:44 GMT+0200 (W. Europe Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

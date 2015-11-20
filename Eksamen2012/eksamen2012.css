@@ -1,0 +1,24 @@
+.soyle {
+	position:absolute;
+	width:30px;
+	height: 16px;
+	background: blue;
+	left: 0px;
+	top: 0px;
+}
+.diagram {
+	position:relative;
+	width: 100%;
+	height: 300px;
+}
+.navn {
+	position: absolute;
+	right:-50px;
+}
+.poeng {
+	position: absolute;
+	right:-150px;
+}
+.poeng:after {
+	content: "poeng"
+}

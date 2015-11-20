@@ -4,6 +4,15 @@
   top:130px;
 }
 
+button {
+  background: red;
+  border-radius: 8px;
+}
+
+h1 {
+  text-align: center;
+}
+
 #logo {
   position:absolute;
   width:180px;
@@ -33,12 +42,12 @@
   top:170px;
 }
 
-
 #intro {
+  display: none;
   position:absolute;
   left: 30px;
   top:130px;
-  width:450px;
+  width:470px;
   height:300px;
   background:black;
   border:solid rgba(205, 116, 41, 0.56) 9px;
@@ -47,9 +56,45 @@
   position:absolute;
   left: -630px;
   top:130px;
-  width:450px;
+  width:470px;
   height:300px;
   border:solid rgba(205, 116, 41, 0.56) 9px;
+}
+
+#personalia {
+  position:absolute;
+  left: 30px;
+  top:50px;
+  width:470px;
+  height:90px;
+}
+
+#victory {
+  position:absolute;
+  color: white;
+  left: -530px;
+  top:130px;
+  width:470px;
+  height:300px;
+  background:black;
+  border:solid rgba(205, 116, 41, 0.56) 9px;
+}
+
+#poeng {
+  position: absolute;
+  top:0;
+  right: -50px;
+  width: 40px;
+  height: 30px;
+  background: #ffc;
+}
+
+.brick {
+  position:absolute;
+  width:25px;
+  height: 12px;
+  background: blue;
+  border: solid #ffa 1px;
 }
 
 .batty {
@@ -60,12 +105,31 @@
   background: green;
 }
 
+@keyframes bounceY {
+  to { transform: scaleY(0.7);}
+}
+
+@keyframes bounceX {
+  to { transform: scaleX(0.7);}
+}
+
 .ball {
   position:absolute;
   top:20px;
   left:20px;
-  width:16px;
-  height:16px;
+  width:10px;
+  height:10px;
   background:red;
-  border-radius:8px;
+  border-radius:5px;
 }
+
+.bonk {
+  animation: bounceY .25s 2 alternate;
+  transform-origin: center;
+}
+.bank {
+  animation: bounceX .25s 2 alternate;
+  transform-origin: center;
+}
+
+

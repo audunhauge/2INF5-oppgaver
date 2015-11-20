@@ -1,0 +1,116 @@
+<html>
+	<head>
+		<meta charset="UTF-8"
+		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+		<link rel="stylesheet" href="eksamen2012.css">
+	</head>
+	<body>
+		<form oninput="calcWinner();">
+		<table id="tabell" class="pure-table pure-table-striped">
+			<thead>
+				<tr>
+					<th>Deltager</th>
+					<th>Svømming</th>
+					<th>Dans</th>
+					<th>Drama</th> 
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input type="text" ></td>
+					<td><input type="number""></td>
+					<td><input type="number"></td>
+					<td><input type="number"></td>
+				</tr>
+				<tr>
+					<td><input type="text" ></td>
+					<td><input type="number"></td>
+					<td><input type="number"></td>
+					<td><input type="number"></td>
+				</tr>
+				<tr>
+					<td><input type="text" ></td>
+					<td><input type="number""></td>
+					<td><input type="number"></td>
+					<td><input type="number"></td>
+				</tr>
+				<tr>
+					<td><input type="text" ></td>
+					<td><input type="number""></td>
+					<td><input type="number"></td>
+					<td><input type="number"></td>
+				</tr>
+				<tr>
+					<td><input type="text" ></td>
+					<td><input type="number""></td>
+					<td><input type="number"></td>
+					<td><input type="number"></td>
+				</tr>
+				<tr>
+					<td><input type="text" ></td>
+					<td><input type="number""></td>
+					<td><input type="number"></td>
+					<td><input type="number"></td>
+				</tr>
+				
+				
+			</tbody>
+				
+		</table>
+		</form>
+		<div id="resultat"></div>
+		<script>
+			function calcWinner() {
+			   var personer = [];
+			   var person = {};
+			   var i;
+			   var csselectBase, csselect;
+			   var divResultat;
+			   
+			   csselectBase = "#tabell > tbody > tr:nth-child(";
+			   for(i=1;i<7;i++) {
+				   person = {};				   
+				   csselect = csselectBase + i + ") > td:nth-child(";
+				   person.navn = document.querySelector(csselect+"1) > input").value;
+				   if (person.navn === "") continue;
+				   person.swim = document.querySelector(csselect+"2) > input").valueAsNumber;
+				   person.dans = document.querySelector(csselect+"3) > input").valueAsNumber;
+				   person.drama = document.querySelector(csselect+"4) > input").valueAsNumber;
+				   person.score = +person.swim+person.dans+person.drama;
+				   if (isNaN(person.score) || person.swim < 0 || person.dans < 0 || person.drama < 0 ) continue;
+				   personer.push(person);
+			   }
+			   // nå har vi alle data lagra i personer
+			   personer.sort(function (a,b) {
+				   return b.score - a.score;
+			   })
+			   if (personer.length > 1) {
+			     divResultat = document.querySelector("#resultat");
+			     divResultat.innerHTML = "Ledere er <ol>" 
+			         + "<li>" + personer[0].navn + " med " + personer[0].score
+					 + "<li>" + personer[1].navn + " med " + personer[1].score
+					 + "</ol>"
+					 + tegnSoyler(personer);
+			   }
+			}
+			
+			function tegnSoyler(personer) {
+			  	var s = '<div class="diagram">';
+				var i;
+				var person;
+				var maxscore = personer[0].score;  // da de er sortert
+				for(i=0; i < personer.length;i++) {
+					person = personer[i];
+					s += '<div class="soyle" style="top:'+(i*18)+'px;'
+					     + 'width:'+(200*person.score/maxscore)+'px;">'
+						 + '<div class="navn">'+person.navn+'</div>'
+						 + '<div class="poeng">'+person.score+'</div>'
+						 +'</div>';
+				}
+				s += '</div>';
+				return s;  
+			}
+		</script>
+			
+	</body>
+</html>

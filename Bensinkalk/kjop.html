@@ -1,0 +1,60 @@
+<html>
+ <head>
+ 	<meta charset="UTF-8">
+ 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+ </head>
+ <body>
+ 	<div id="personalia">
+      <p>
+      <form class="pure-form pure-form-aligned" >
+        <div class="pure-control-group">
+          <label for="antall">Antall</label>
+          <input id="antall" type="number" min=1 >
+        </div>
+        <div class="pure-control-group">
+          <label for="pris">Pris</label>
+          <input id="pris" min=0
+                 type="number" placeholder="pris i kr">
+        </div>
+
+        <div class="pure-control-group">
+          <label for="mva">MVA</label>
+          <input id="mva" type="checkbox" >
+        </div>
+        
+        <div class="pure-control-group">
+          <label for="total">Totalpris</label>
+          <output  id="total"><i>velg gyldige verdier</i></output>
+        </div>
+        <div class="pure-controls">
+          <div id="beregn"
+               class="pure-button pure-button-primary">Beregn</div>
+        </div>
+      </form>
+    </div>
+    
+
+    <script>
+       var lagre = document.querySelector("#beregn");
+       lagre.addEventListener("click",beregn);
+
+       function respond(antall,pris) {
+            var total = antall*pris;
+            var mva = +document.querySelector("#mva").checked;
+            if (mva) {
+              total *= 1.25;
+            }
+            if (! isNaN(total))  {
+            	document.querySelector("#total").innerHTML = total.toFixed(0) + "kr";
+            }
+       }
+       
+       function beregn() {
+       	  var antall = +document.querySelector("#antall").valueAsNumber;
+       	  var pris = +document.querySelector("#pris").valueAsNumber;
+       	  respond(antall,pris);
+       }
+       
+    </script>
+ </body>
+</html>

@@ -1,6 +1,7 @@
 <html>
   <head>
     <link rel="stylesheet" href="spill.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <script src="../lib/howler.min.js"></script>
     <script src="../lib/mousetrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
@@ -8,6 +9,8 @@
   </head>
   <body>   
     <h1>Ballspill</h1>
+
+
     <div id="intro">
       <div id="logo">A CrashGame Production</div>
       <img id="bil" src="bil.png">
@@ -15,10 +18,56 @@
       <div id="box2" class="box"></div>
       <div id="box3" class="box"></div>
     </div>
+    <div id="victory">
+      <h1>Du har vunnet</h1>
+      <div id="score"></div>  
+    </div>
+
+    <div id="personalia">
+      <p>
+      <form class="pure-form pure-form-aligned">
+        <div class="pure-control-group">
+          <label for="username">Username</label>
+          <input id="username" type="text" placeholder="skriv navn">
+        </div>
+        <div class="pure-control-group">
+          <label for="alder">Alder</label>
+          <input id="alder" min=10 max=60
+                 type="number" placeholder="alder">
+        </div>
+        <div class="pure-control-group">
+          <label for="date">Dato</label>
+          <input type="date">
+        </div>
+        <div class="pure-control-group">
+          <label for="antall">Antall rader</label>
+          <input id="antall" type="number" placeholder="antall rader">
+        </div>
+        <div class="pure-control-group">
+          <label for="speed">Hastighet</label>
+          <input id="speed" type="number" placeholder="hastighet (1-5)">
+        </div>
+        <div class="pure-controls">
+          <div id="lagre"
+               class="pure-button pure-button-primary">Lagre</div>
+        </div>
+      </form>
+    </div>
+    
+
+
     <div id="brett" >
+      <div id="poeng"></div>
     </div>
     <script>
-       startSpill();
+       //startSpill();
+       var lagre = document.querySelector("#lagre");
+       lagre.addEventListener("click",lagreInfo)
     </script>
   </body>
 </html>
+
+
+
+
+

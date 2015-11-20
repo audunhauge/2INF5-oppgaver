@@ -1,0 +1,47 @@
+<html>
+  <head>
+  	 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+  	 <link rel="stylesheet" href="skjema.css">
+  	 <script src="skjema.js"></script>
+  </head>
+  <body>
+     <div id="personalia">
+      <p>
+      <form class="pure-form pure-form-aligned" oninput="sspeed.value = speed.valueAsNumber">
+        <div class="pure-control-group">
+          <label for="navn">navn</label>
+          <input id="navn" type="text" placeholder="skriv navn">
+        </div>
+        <div class="pure-control-group">
+          <label for="alder">Alder</label>
+          <input id="alder" min=1 max=120
+                 type="number" placeholder="alder">
+        </div>
+        <div class="pure-control-group">
+          <label for="date">Dato</label>
+          <input type="date">
+        </div>
+        <div class="pure-control-group">
+          <label for="antall">Antall rader</label>
+          <input id="antall" type="number" placeholder="antall rader">
+        </div>
+        <div class="pure-control-group">
+          <label for="speed">Hastighet</label>
+          <input id="speed" type="range" placeholder="hastighet (1-5)">
+          <output for="speed" name="sspeed">50</output>
+        </div>
+        <div class="pure-controls">
+          <div id="lagre"
+               class="pure-button pure-button-primary">Lagre</div>
+        </div>
+      </form>
+    </div>
+    <div id="hilsen">
+    </div>
+
+    <script>
+       var lagre = document.querySelector("#lagre");
+       lagre.addEventListener("click",lagreInfo)
+    </script>
+  </body>
+</html>
